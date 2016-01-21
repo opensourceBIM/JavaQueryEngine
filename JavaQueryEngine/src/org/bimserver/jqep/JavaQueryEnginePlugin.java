@@ -38,14 +38,12 @@ import org.bimserver.utils.PathUtils;
 import com.google.common.base.Charsets;
 
 public class JavaQueryEnginePlugin implements QueryEnginePlugin {
-	private boolean initialized = false;
 	private final Map<String, String> examples = new LinkedHashMap<String, String>();
 	private PluginManagerInterface pluginManager;
 
 	@Override
 	public void init(PluginManagerInterface pluginManager) throws PluginException {
 		this.pluginManager = pluginManager;
-		initialized = true;
 		initExamples(pluginManager);
 	}
 
@@ -73,21 +71,6 @@ public class JavaQueryEnginePlugin implements QueryEnginePlugin {
 		return examples.get(key);
 	}
 	
-	@Override
-	public String getDescription() {
-		return "Java Query Engine Plugin";
-	}
-
-	@Override
-	public String getVersion() {
-		return "1.0";
-	}
-
-	@Override
-	public boolean isInitialized() {
-		return initialized;
-	}
-
 	@Override
 	public QueryEngine getQueryEngine(PluginConfiguration pluginConfiguration) {
 		PluginContext pluginContext = pluginManager.getPluginContext(this);

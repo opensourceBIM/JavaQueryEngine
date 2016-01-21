@@ -3,6 +3,7 @@
 	<PluginImplementation>
 		<interfaceClass>org.bimserver.plugins.queryengine.QueryEnginePlugin</interfaceClass>
 		<implementationClass>org.bimserver.jqep.JavaQueryEnginePlugin</implementationClass>
+		<description>Java Query Engine Plugin</description>
 		<enabled>true</enabled>
 	</PluginImplementation>
 </PluginDescriptor>
