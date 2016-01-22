@@ -72,7 +72,7 @@ public class JavaQueryEnginePlugin implements QueryEnginePlugin {
 	}
 	
 	@Override
-	public QueryEngine getQueryEngine(PluginConfiguration pluginConfiguration) {
+	public QueryEngine getQueryEngine(PluginConfiguration pluginConfiguration) throws PluginException {
 		PluginContext pluginContext = pluginManager.getPluginContext(this);
 		return new JavaQueryEngine(pluginContext.getClassLoader(), pluginContext.getRootPath());
 	}

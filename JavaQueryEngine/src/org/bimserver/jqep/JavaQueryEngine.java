@@ -38,6 +38,7 @@ import org.bimserver.plugins.VirtualClassLoader;
 import org.bimserver.plugins.VirtualFile;
 import org.bimserver.plugins.VirtualFileManager;
 import org.bimserver.plugins.queryengine.QueryEngine;
+import org.bimserver.shared.exceptions.PluginException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -48,9 +49,13 @@ public class JavaQueryEngine implements QueryEngine {
 	private final ClassLoader classLoader;
 	private final JavaFileManager pluginFileManager;
 
-	public JavaQueryEngine(ClassLoader classLoader, Path rootPath) {
+	public JavaQueryEngine(ClassLoader classLoader, Path rootPath) throws PluginException {
 		this.classLoader = classLoader;
-		this.pluginFileManager = ToolProvider.getSystemJavaCompiler().getStandardFileManager(null, null, null);
+		JavaCompiler systemJavaCompiler = ToolProvider.getSystemJavaCompiler();
+		if (systemJavaCompiler == null) {
+			throw new PluginException("No JDK installed");
+		}
+		this.pluginFileManager = systemJavaCompiler.getStandardFileManager(null, null, null);
 	}
 
 	@Override
