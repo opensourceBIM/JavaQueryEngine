@@ -42,7 +42,7 @@ public class JavaQueryEnginePlugin implements QueryEnginePlugin {
 	private PluginManagerInterface pluginManager;
 
 	@Override
-	public void init(PluginManagerInterface pluginManager) throws PluginException {
+	public void init(PluginContext pluginContext) throws PluginException {
 		this.pluginManager = pluginManager;
 		initExamples(pluginManager);
 	}
@@ -75,11 +75,6 @@ public class JavaQueryEnginePlugin implements QueryEnginePlugin {
 	public QueryEngine getQueryEngine(PluginConfiguration pluginConfiguration) throws PluginException {
 		PluginContext pluginContext = pluginManager.getPluginContext(this);
 		return new JavaQueryEngine(pluginContext.getClassLoader(), pluginContext.getRootPath());
-	}
-
-	@Override
-	public String getDefaultName() {
-		return "JavaQueryEnginePlugin";
 	}
 
 	@Override
