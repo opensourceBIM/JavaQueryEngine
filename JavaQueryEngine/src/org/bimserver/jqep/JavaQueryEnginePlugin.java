@@ -29,7 +29,6 @@ import org.apache.commons.io.IOUtils;
 import org.bimserver.models.store.ObjectDefinition;
 import org.bimserver.plugins.PluginConfiguration;
 import org.bimserver.plugins.PluginContext;
-import org.bimserver.plugins.PluginManagerInterface;
 import org.bimserver.plugins.queryengine.QueryEngine;
 import org.bimserver.plugins.queryengine.QueryEnginePlugin;
 import org.bimserver.shared.exceptions.PluginException;
@@ -39,16 +38,15 @@ import com.google.common.base.Charsets;
 
 public class JavaQueryEnginePlugin implements QueryEnginePlugin {
 	private final Map<String, String> examples = new LinkedHashMap<String, String>();
-	private PluginManagerInterface pluginManager;
+	private PluginContext pluginContext;
 
 	@Override
 	public void init(PluginContext pluginContext) throws PluginException {
-		this.pluginManager = pluginManager;
-		initExamples(pluginManager);
+		this.pluginContext = pluginContext;
+		initExamples(pluginContext);
 	}
 
-	private void initExamples(PluginManagerInterface pluginManager) {
-		PluginContext pluginContext = pluginManager.getPluginContext(this);
+	private void initExamples(PluginContext pluginContext) {
 		try {
 			for (Path path : PathUtils.list(pluginContext.getRootPath().resolve("examples"))) {
 				InputStream inputStream = Files.newInputStream(path);
@@ -73,7 +71,6 @@ public class JavaQueryEnginePlugin implements QueryEnginePlugin {
 	
 	@Override
 	public QueryEngine getQueryEngine(PluginConfiguration pluginConfiguration) throws PluginException {
-		PluginContext pluginContext = pluginManager.getPluginContext(this);
 		return new JavaQueryEngine(pluginContext.getClassLoader(), pluginContext.getRootPath());
 	}
 
